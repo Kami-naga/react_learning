@@ -2,29 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import {Button,Well,ListGroup,ListGroupItem} from 'react-bootstrap';
+import {Button,ListGroup,ListGroupItem,Checkbox,FormControl} from 'react-bootstrap';
 import './index.css';
-
-class Test extends React.Component{
-    render() {
-    return(
-        <div>
-
-
-
-            <Button>Test</Button>
-            <Button bsStyle="primary">Test</Button>
-            <Button bsStyle="link">Test</Button>
-            <Button bsSize="large">Test</Button>
-            <Button active>Test</Button>
-            <Button >Test</Button>
-
-
-        </div>
-    );
-}
-}
-
 class App extends React.Component {
     constructor() {
         super()
@@ -89,7 +68,7 @@ class App extends React.Component {
 
 class TodoHeader extends React.Component {
     handlerKeyUp(e) {
-        if(e.keyCode == 13) {
+        if(e.keyCode === 13) {
             let value = e.target.value;
             if(!value) return false;
             let date = new Date().Format("yyyy-MM-dd hh:mm")
@@ -116,7 +95,7 @@ class TodoHeader extends React.Component {
             };
             if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
             for (var k in o)
-                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             return fmt;
         }
     }
@@ -124,7 +103,13 @@ class TodoHeader extends React.Component {
         return (
             <div className="todo-header">
                 <h1 className="todo-title">React-Todos</h1>
-                <input autoFocus ref="input" onKeyUp={this.handlerKeyUp.bind(this)} type="text" placeholder="Enter something"/>
+                <FormControl
+                    bsSize={"lg"}
+                    type="text"
+                    autoFocus ref="input"
+                    onKeyUp={this.handlerKeyUp.bind(this)}
+                    placeholder="Enter something"
+                />
             </div>
         )
     }
@@ -132,7 +117,7 @@ class TodoHeader extends React.Component {
 
 class TodoMain extends React.Component {
     render(){
-        if(this.props.todos.length == 0) {
+        if(this.props.todos.length === 0) {
             return (
                 <div className="todo-empty">Nothing to do now</div>
             )
@@ -166,13 +151,15 @@ class TodoItem extends React.Component {
         ReactDOM.findDOMNode(this.refs.delButton).style.display = 'none'
     }
     render() {
-        let className = this.props.isDone?'task-done':''
+        //let className = this.props.isDone?'task-done':''
         return (
-            <ListGroupItem onMouseOver={this.handlerMouseIn.bind(this)} onMouseOut={this.handlerMouseOut.bind(this)}>
-                <checkbox checked={this.props.isDone} onChange={this.handlerChange.bind(this)}/>
+            <ListGroupItem bsStyle="info" onMouseOver={this.handlerMouseIn.bind(this)} onMouseOut={this.handlerMouseOut.bind(this)}>
                 <span className="time">{this.props.time}</span>
-                <span className={className+' task'}>{this.props.text}</span>
-                <Button ref="delButton" type="danger" size="small" onClick={this.handlerDelete.bind(this)}>Delete</Button>
+                <Checkbox checked={this.props.isDone} onChange={this.handlerChange.bind(this)}>
+                    {this.props.text}
+                    <Button ref="delButton" bsStyle="danger" bsSize="sm" onClick={this.handlerDelete.bind(this)}>Delete</Button>
+                </Checkbox>
+
             </ListGroupItem>
         )
     }
@@ -189,11 +176,9 @@ class TodoFooter extends React.Component{
         let minus = this.props.todoCount - this.props.todoDoneCount
         return (
             <div className="todo-footer">
-                <label>
-                    <checkbox checked={this.props.isAllChecked} onChange={this.changeAll.bind(this)}/>Select All
-                </label>
-                <span className="item-left">Remain{minus}uncompleted</span>
-                <Button bsStyle="danger" bsSize="small" onClick={this.deleteAll.bind(this)}>Clear All</Button>
+                <Checkbox checked={this.props.isAllChecked} onChange={this.changeAll.bind(this)}>Select All</Checkbox>
+                <span className="item-left">Remain {minus} uncompleted</span>
+                <Button bsStyle="danger" bsSize="sm" onClick={this.deleteAll.bind(this)}>Clear the Selected</Button>
             </div>
         )
     }
