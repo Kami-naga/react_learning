@@ -1,14 +1,1 @@
-body {
-  padding-top: 5rem;
-  text-align: center;
-}
-
-ul {
-  text-align: left;
-  margin-top: 1rem;
-}
-
-#root {
-  margin: 0 auto;
-  display: table;
-}
+#app{width:60%;padding:20px;margin:0 auto;}#app .todo-empty{text-align:center;padding:10px 0;font-size:16px}#app .todo-title{color:#f00;font-family:"Weibei TC";text-align:center}#app .todo-main li{padding:10px 0;height:50px;}#app .todo-main li .time{display:inline-block;vertical-align:top;width:31%;min-width:160px;font-size:16px}#app .todo-main li .task{display:inline-block;vertical-align:top;width:56%;font-size:16px;}#app .todo-main li .task.task-done{text-decoration:line-through}#app .todo-main li .ant-btn{vertical-align:top;display:none}#app .todo-footer{display:flex;justify-content:space-between;font-size:14px}
